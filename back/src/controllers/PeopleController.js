@@ -1,5 +1,6 @@
 const knex = require("../database")
 const { Cryptography } = require("../argon2")
+const { CreateToken } = require("../jwt")
 
 module.exports = {
     async index(req, res) {
@@ -26,7 +27,10 @@ module.exports = {
                 }
             )
 
-            return res.status(201).send()
+            const user = await knex('people')
+            .where('EMAIL', email)
+
+            return res.status(201).send({user, token: await CreateToken(user[0])})
 
         } catch (error) {
             next(error)

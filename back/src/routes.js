@@ -15,7 +15,7 @@ routes.post('/appointment', AppointmentController.create)
 routes.put('/appointment', AppointmentController.update)
 routes.delete('/appointment', AppointmentController.delete)
 
-routes.post('/login', AuthenticatorController.login)
+routes.get('/login', AuthenticatorController.login)
 
 
 module.exports = routes

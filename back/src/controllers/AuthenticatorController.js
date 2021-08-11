@@ -1,12 +1,14 @@
 const knex = require("../database")
 const argon2 = require('argon2')
+const { CreateToken } = require("../jwt")
 
 
 module.exports = {
 
     async login(req, res, next) {
 
-        const { email, password } = req.body
+        const [, hash] = req.headers.authorization.split(" ")
+        const [email, password] = Buffer.from(hash, 'base64').toString().split(":")
 
         try {
 
@@ -18,7 +20,7 @@ module.exports = {
                 return res.status(404).send()
             } else if (await argon2.verify(people[0].PASSWORD, password)) {
                 
-                return res.status(200).send(people)
+                return res.status(200).send({people, token: await CreateToken(people[0])})
             } else {
                 return res.status(401).send()
             }
