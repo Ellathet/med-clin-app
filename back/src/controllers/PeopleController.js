@@ -1,4 +1,5 @@
 const knex = require("../database")
+const { Cryptography } = require("../argon2")
 
 module.exports = {
     async index(req, res) {
@@ -8,10 +9,22 @@ module.exports = {
     },
     async create(req, res, next) {
 
-        const { id, name, fun, type, email, cpf, rg, birth, password } = req.body
+        const { name, fun, type, email, cpf, rg, birth, password } = req.body
 
         try {
-            await knex('people').insert()
+            await knex('people')
+            .insert(
+                {
+                    NAME: name,
+                    FUNCTION: fun,
+                    TYPE: type,
+                    EMAIL: email,
+                    CPF: cpf,
+                    RG: rg,
+                    BIRTH: null,
+                    PASSWORD: await Cryptography(password)
+                }
+            )
 
             return res.status(201).send()
 

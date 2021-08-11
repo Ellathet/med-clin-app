@@ -5,10 +5,10 @@ exports.up = function(knex) {
     table.string('NAME').notNullable()
     table.string('FUNCTION')
     table.string('TYPE', 1) //M = Medic P = Patient
-    table.string('EMAIL')
+    table.string('EMAIL').unique()
     //Apenas números:
-    table.string('CPF') 
-    table.string('RG')
+    table.string('CPF').unique()
+    table.string('RG').unique()
     //
     table.date('BIRTH')
     table.string('PASSWORD')
