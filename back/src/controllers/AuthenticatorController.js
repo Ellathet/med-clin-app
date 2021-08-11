@@ -1,6 +1,6 @@
 const knex = require("../database")
 const argon2 = require('argon2')
-const { CreateToken } = require("../jwt")
+const { CreateToken, DecodeToken} = require("../jwt")
 
 
 module.exports = {
@@ -30,6 +30,27 @@ module.exports = {
             next(error)
         }
 
+    },
+
+    async userConfirm(req, res, next) {
+
+        if(req.headers.authorization === undefined) {
+            res.status(404).send()
+        } else {
+            try {
+
+                const [, hash] = req.headers.authorization.split(" ")
+                const { user : userId} = await DecodeToken(hash) 
+    
+                const user = 
+                await knex('people')
+                    .where('ID', userId) 
+                
+                    return res.status(200).send(user)
+            } catch (error) {
+                next(error)
+            }
+        }
 
     }
 }

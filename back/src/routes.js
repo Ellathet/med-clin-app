@@ -17,5 +17,8 @@ routes.delete('/appointment', AppointmentController.delete)
 
 routes.get('/login', AuthenticatorController.login)
 
+routes.get('/me', AuthenticatorController.userConfirm)
+
+
 
 module.exports = routes

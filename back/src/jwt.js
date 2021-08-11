@@ -10,5 +10,6 @@ module.exports = {
     },
     async DecodeToken(token) {
             const verify = await jwt.verify(token, secret)
+        return verify
     }
 }
