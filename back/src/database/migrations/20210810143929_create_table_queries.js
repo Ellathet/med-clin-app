@@ -2,8 +2,16 @@
 exports.up = function(knex) {
     return knex.schema.createTable('appointments' ,(table) => {
         table.increments('ID')
+
         table.integer('MEDIC_ID')
+            .references('people.ID')
+            .notNullable()
+            .onDelete('CASCADE')
         table.integer('PATIENT_ID')
+            .references('people.ID')
+            .notNullable()
+            .onDelete('CASCADE')
+        table.string('DESCRIPTION')
 
         table.date('APPOINTMENT')
 
