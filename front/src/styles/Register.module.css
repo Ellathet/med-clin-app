@@ -22,8 +22,8 @@
     flex-direction: column;
     align-items: center;
 
-    width: 38%;
-    height: 25rem;
+    width: 60%;
+    max-height: 55rem;
     border-radius: 7px;
 }
 
@@ -87,10 +87,17 @@
     align-items: left;
 }
 
+.dualInputContainer {
+    gap: 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
 .buttons{
     display: flex;
     flex-direction: row;
-    align-items: center;
+    align-items: right;
     gap: 1rem;
 }
 
@@ -144,4 +151,31 @@
     border: 3px solid var(--dark-blue);
 
     color: var(--dark-blue)
+}
+
+.functionButton {
+    min-height: 7rem;
+
+    background-color: var(--dark-blue);
+
+    transition: background-color 0.4s;
+    transition: color 0.4s;
+    transition: border 0.4s
+}
+
+.functionButton:hover {
+    background-color: var(--white);
+    border: 3px solid var(--dark-blue);
+
+    color: var(--dark-blue)
+}
+
+.buttonInputContainer {
+    align-items: center;
+}
+
+.buttonInputContainer label {
+    color: var(--dark-gray);
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
 }

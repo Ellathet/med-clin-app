@@ -1,8 +1,11 @@
+import { GetServerSideProps } from "next";
 import Router from "next/router"
 import { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { AuthContext } from '../contexts/AuthContext';
 import styles from '../styles/Login.module.css'
+import { parseCookies } from 'nookies'
+
 
 interface FormData { 
   email: string,
@@ -39,10 +42,6 @@ export default function Home() {
     }
   }
 
-/*   if(isAuthenticated) {
-    Router.push('/Appointments')
-  } */
-
   return (
     <div>
         <style>
@@ -75,4 +74,23 @@ export default function Home() {
       </div>
     </div>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+
+  const { ['medClin-token']: token} = parseCookies(ctx)
+
+  if(token) {
+    return {
+      redirect: {
+        destination: '/Appointments',
+        permanent: false,
+      }
+    }
+  }
+
+  return {
+    props: {}
+  }
+
 }
