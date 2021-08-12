@@ -1,0 +1,146 @@
+.header {
+    z-index: -1;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    background-color: var(--blue);
+}
+
+.container {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+
+    background-color: var(--white);
+    padding: 2rem;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    width: 38%;
+    height: 25rem;
+    border-radius: 7px;
+}
+
+.form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    padding: 1rem;
+
+    gap: 1.5rem;
+}
+
+.form input {
+
+    background-color: var(--blue-holder);
+
+    max-width: 25rem;
+    min-width: 25rem;
+
+    height:3rem;
+    border-radius: 7px;
+
+    border: none;
+
+    padding: 0rem 1rem 0rem 1rem;
+
+    transition: background-color 0.4s;
+
+    font-size: 1rem;
+    color: var(--out-text);
+    font-weight:500;
+
+}
+
+.form input:focus {
+    color: var(--text);
+    outline: none !important;
+    border: 2px solid var(--dark-blue);
+}
+
+.form label {
+
+    font-size: 1.2rem;
+    color: var(--text);
+    font-weight: 500;
+    margin-left: 0.6rem;
+    margin-bottom: 0.3rem;
+
+}
+
+.form h1 {
+    margin-bottom: 1rem;
+}
+
+.inputContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+}
+
+.buttons{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+}
+
+.buttons button {
+
+    border: none;
+    border-radius: 7px;
+
+    height:3rem;
+
+    max-width: 12rem;
+    min-width: 12rem;
+
+    padding: 0.5rem;
+
+    font-size: 1.3rem;
+    color: var(--white);
+    font-weight: 700;
+
+}
+
+.buttons button:hover {
+    cursor: pointer;
+}
+
+.enter {
+    background-color: var(--green);
+
+    transition: background-color 0.4s;
+    transition: color 0.4s;
+    transition: border 0.4s
+}
+
+.enter:hover {
+    background-color: var(--white);
+    border: 3px solid var(--green);
+
+    color: var(--green)
+}
+
+.register {
+    background-color: var(--dark-blue);
+
+    transition: background-color 0.4s;
+    transition: color 0.4s;
+    transition: border 0.4s
+}
+
+.register:hover {
+    background-color: var(--white);
+    border: 3px solid var(--dark-blue);
+
+    color: var(--dark-blue)
+}

@@ -1,9 +1,13 @@
 :root{
   --white:#fff;
-  --black: #202020;
+  --text: #4D4D4D;
+  --out-text: #797979;
+  --dark-gray: #202020;
   --background: #f1f2f3;
-
-  --blue: 
+  --blue: #3AB2F9;
+  --dark-blue: #3176FF;
+  --blue-holder: #C8E4F5;
+  --green: #4FFC49;
 }
 
 * {
@@ -11,6 +15,7 @@
   margin: 0;
 }
 
-body, input, select, textarea{
+body, input, select, textarea, button{
   font-family: 'Roboto', sans-serif;
+  background-color: var(--background);
 }
