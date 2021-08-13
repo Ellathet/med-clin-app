@@ -1,6 +1,7 @@
 const knex = require("../database")
 const { Cryptography } = require("../argon2")
 const { CreateToken } = require("../jwt")
+const { parseISO } = require('date-fns')
 
 module.exports = {
     async index(req, res) {
@@ -13,6 +14,17 @@ module.exports = {
         const { name, fun, type, email, cpf, rg, birth, password } = req.body
 
         try {
+
+            const confirmEmail = await knex('people')
+            .where('EMAIL', email)
+            .orWhere('CPF', cpf)
+            .orWhere('RG', rg)
+
+            if( confirmEmail.length > 0) {
+
+                return res.status(409).send()
+            }
+
             await knex('people')
             .insert(
                 {
@@ -22,7 +34,7 @@ module.exports = {
                     EMAIL: email,
                     CPF: cpf,
                     RG: rg,
-                    BIRTH: null,
+                    BIRTH: parseISO(birth),
                     PASSWORD: await Cryptography(password)
                 }
             )
@@ -33,6 +45,8 @@ module.exports = {
             return res.status(201).send({user, token: await CreateToken(user[0])})
 
         } catch (error) {
+
+            console.log(error)
             next(error)
         }           
     },

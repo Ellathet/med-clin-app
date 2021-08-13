@@ -1,12 +1,28 @@
 import { GetServerSideProps } from "next"
-import { redirect } from "next/dist/next-server/server/api-utils"
 import { parseCookies } from 'nookies'
+import { useContext } from "react";
+
+import { AuthContext } from '../contexts/AuthContext';
 
 export default function Appointments() {
+
+  const { user } = useContext(AuthContext);
+
     return (
-      <div>
-          Appointments
-      </div>
+      <>
+        <div/>
+        <div>
+          { user?.TYPE == "M" ? (
+            <div>
+              {user?.NAME}
+            </div>
+          ) : ( 
+            <div>
+              <span>{user?.NAME}</span>
+            </div>
+          )}           
+        </div>
+      </>
     )
   }
 

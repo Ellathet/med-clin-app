@@ -60,6 +60,33 @@
 
 }
 
+.form select {
+    background-color: var(--blue-holder);
+
+    max-width: 25rem;
+    min-width: 25rem;
+
+    height:3rem;
+    border-radius: 7px;
+
+    border: none;
+
+    padding: 0rem 1rem 0rem 1rem;
+
+    transition: background-color 0.4s;
+
+    font-size: 1rem;
+    color: var(--out-text);
+    font-weight:500;
+
+}
+
+.form select:focus {
+    color: var(--text);
+    outline: none !important;
+    border: 2px solid var(--dark-blue);
+}
+
 .form input:focus {
     color: var(--text);
     outline: none !important;
@@ -87,6 +114,14 @@
     align-items: left;
 }
 
+.inputContainer span {
+    margin-top: 0.4rem;
+    margin-left: 0.5rem;
+
+    color: var(--red);
+    font-size: 1rem;
+}
+
 .dualInputContainer {
     gap: 1rem;
     display: flex;
@@ -101,7 +136,34 @@
     gap: 1rem;
 }
 
-.buttons button {
+.buttonNext {
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+    
+}
+
+.buttonNext button {
+    border: none;
+    border-radius: 7px;
+
+    height:3rem;
+
+    max-width: 12rem;
+    min-width: 12rem;
+
+    padding: 0.5rem;
+
+    font-size: 1.3rem;
+    color: var(--white);
+    font-weight: 700;
+}
+
+.buttonNext button:hover {
+    cursor: pointer;
+}
+
+.buttons button,  .medicButton {
 
     border: none;
     border-radius: 7px;
@@ -123,7 +185,9 @@
     cursor: pointer;
 }
 
-.enter {
+.next {
+    margin-top: 1rem;
+
     background-color: var(--green);
 
     transition: background-color 0.4s;
@@ -131,7 +195,7 @@
     transition: border 0.4s
 }
 
-.enter:hover {
+.next:hover {
     background-color: var(--white);
     border: 3px solid var(--green);
 
@@ -154,7 +218,8 @@
 }
 
 .functionButton {
-    min-height: 7rem;
+    
+    min-height: 6rem;
 
     background-color: var(--dark-blue);
 
@@ -178,4 +243,26 @@
     color: var(--dark-gray);
     font-size: 1.5rem;
     margin-bottom: 1rem;
+}
+
+.medicButton {
+
+    min-height:5.7rem;
+    max-height: 5rem;
+
+    border: 3px solid var(--dark-blue); 
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0px;
+
+    transition: background-color 0.4s;
+    transition: color 0.4s;
+    transition: border 0.4s
+
+}
+
+.medicButton:hover {
+    cursor: pointer;
 }
