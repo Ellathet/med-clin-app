@@ -9,6 +9,24 @@ module.exports = {
 
         return res.json(results)
     },
+    async medicUser(req, res) {
+        if(req.body.fun === "all") {
+            
+        const results = await knex('people')
+            .where('TYPE', 'M')
+
+            return res.json(results)
+        }else {
+            const results = await knex('people')
+            .where('TYPE', 'M')
+            .andWhere('FUNCTION', req.body.fun)
+
+            return res.json(results)
+        }
+
+ 
+         
+     },
     async create(req, res, next) {
 
         const { name, fun, type, email, cpf, rg, birth, password } = req.body

@@ -11,7 +11,7 @@ import * as yup from 'yup';
 import { parseCookies } from 'nookies'
 import { GrFormNextLink } from 'react-icons/gr'
 import { parseISO, differenceInYears} from 'date-fns';
-import axios from 'axios';
+import { api } from '../services/api';
 
 import { AuthContext } from '../contexts/AuthContext';
 import styles from '../styles/Register.module.css'
@@ -33,8 +33,6 @@ interface FormData {
   confirmPassword: string,
   medicFunction: string,
 }
-
-const url = "http://localhost:3333"
 
 export default function Register() {
 
@@ -58,7 +56,7 @@ export default function Register() {
               .test('emailNotFound', 'Esse e-mail já está cadastrado', (value) => {              
                 
                 return new Promise((res, rej) => {
-                  axios.get(`${url}/login`, {
+                  api.get(`/login`, {
                     auth: {
                         username: value 
                     },

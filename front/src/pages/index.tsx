@@ -4,7 +4,7 @@ import styles from '../styles/Login.module.css'
 import { GetServerSideProps } from "next";
 import { useContext, useState } from 'react';
 
-import axios from 'axios';
+import { api } from '../services/api';
 
 import { parseCookies } from 'nookies';
 
@@ -16,8 +16,6 @@ interface FormData {
   email: string,
   password: string,
 }
-
-const url = "http://localhost:3333"
 
 export default function Home() {
 
@@ -33,7 +31,7 @@ export default function Home() {
                 setEmail(value)
                 
                 return new Promise((res, rej) => {
-                  axios.get(`${url}/login`, {
+                  api.get(`/login`, {
                     auth: {
                         username: value 
                     },
@@ -49,7 +47,7 @@ export default function Home() {
                  .min(7, 'Sua senha deve conter no mínimo 8 caracteres')
                  .test(' ', 'Senha incorreta', (value) => {
                   return new Promise((res, rej) => {
-                    axios.get(`${url}/login`, {
+                    api.get(`/login`, {
                       auth: {
                           username: email,
                           password: value
@@ -68,12 +66,7 @@ export default function Home() {
   })
 
   async function handleSignIn(data : FormData ) {
-
-      try {
         await signIn(data)
-      } catch (error) {
-        console.log(error)
-      }
   }
 
   return (
@@ -93,9 +86,9 @@ export default function Home() {
               {errors.password && <span>{errors.password?.message}</span>}
             </div>
             <div className={styles.buttons}>
-              <button className={styles.register} onClick={()=> Router.push('/register')}>
+              <div className={`${styles.registerButton} ${styles.functionButton}`} onClick={()=> Router.push('/register')}>
                 Registre-se
-              </button>
+              </div>
               <button type="submit" form="login" className={styles.enter}>
                 Entrar
               </button>

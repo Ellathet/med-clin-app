@@ -1,9 +1,9 @@
 
-import axios from "axios";
+import { api } from '../services/api';
 import { createContext, useEffect, useState } from "react";
 import { setCookie, parseCookies } from 'nookies'
 import Router from "next/router"
-
+import { AnyObject } from 'yup/lib/types';
 interface User {
     ID: number;
     NAME: string;
@@ -18,15 +18,14 @@ interface User {
     update_at:string;
 
 }
-
 interface AuthContextData {
     isAuthenticated: boolean;
     user:User | null;
     signIn: (data : SignInData) => Promise<void>
     signUp: (data : SignUpData) => Promise<void>
     error: number;
+    recoverUserInfos: any;
 }
-
 interface SignUpData {
 
 } 
@@ -34,8 +33,6 @@ interface SignInData {
     email: string;
     password: string;
 }
-
-const url = "http://localhost:3333"
 
 export const AuthContext = createContext({} as AuthContextData)
 
@@ -46,8 +43,8 @@ export function AuthProvider({children}) {
 
     const isAuthenticated = !!user;
 
-    async function recoverUserInfos(token) {
-        return axios.get(`${url}/me`,{
+    async function recoverUserInfos(token : string) {
+        return api.get(`/me`,{
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -66,7 +63,7 @@ export function AuthProvider({children}) {
 
     async function signIn({email, password} : SignInData ) {
 
-        axios.get(`${url}/login`, {
+        api.get(`/login`, {
             auth: {
                 username: email ,
                 password: password
@@ -74,21 +71,19 @@ export function AuthProvider({children}) {
         }).then((response)=> {
 
             setCookie(undefined, "medClin-token", response.data.token, {
-                maxAge: 60 * 60 * 24, // 24 Horas
+                maxAge: 60 * 60 * 24, // 24 hours
             })
 
             setUser(response.data.people[0])
 
             Router.push('/appointments')
 
-        }).catch((error)=>{
-
         })
     
     }
 
     async function signUp({name, birthDate, email, rg, cpf, password, medicFunction, type} : any) {
-        axios.post(`${url}/people`, {
+        api.post(`/people`, {
             
             name: name,
             fun: medicFunction,
@@ -105,13 +100,12 @@ export function AuthProvider({children}) {
                 maxAge: 60 * 60 * 24, //24 horas
             })
 
-            setUser(response.data.people[0])
+            setUser(response.data)
 
+            api.defaults.headers['Authorization'] = `Bearer ${response.data.token}`
+ 
             Router.push('/appointments')
 
-
-        }).catch((error) =>{
-            
         })
 
     }
@@ -122,8 +116,8 @@ export function AuthProvider({children}) {
             signIn,
             user,
             error,
-            signUp
-
+            signUp,
+            recoverUserInfos
         }}>
             {children}
         </AuthContext.Provider>
