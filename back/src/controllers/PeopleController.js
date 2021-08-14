@@ -9,22 +9,43 @@ module.exports = {
 
         return res.json(results)
     },
-    async medicUser(req, res) {
-        if(req.body.fun === "all") {
-            
-        const results = await knex('people')
-            .where('TYPE', 'M')
 
-            return res.json(results)
-        }else {
-            const results = await knex('people')
-            .where('TYPE', 'M')
-            .andWhere('FUNCTION', req.body.fun)
+    async medicUser(req, res, next) {
 
-            return res.json(results)
+        try {
+
+            if(req.query.search_function === "all") {
+                const results =  await knex('people')
+                .where('TYPE', 'M' )
+                .andWhere((qb) => {
+                    if(req.query.search_name) {
+                        qb.where('people.NAME', 'like', `%${req.query.search}%`)
+                    }
+                })
+
+                return res.json(results).send()
+            } else {
+                const results =  await knex('people')
+                .where('TYPE', 'M' )
+                .andWhere((qb) => {
+                    if(req.query.search_name) {
+                        qb.where('people.NAME', 'like', `%${req.query.search_name}%`)
+                    }
+                })
+                .andWhere((qb) => {
+                    if(req.query.search_function) {
+                        qb.where('people.NAME', 'like', `%${req.query.search_function}%`)
+                    }
+                })
+
+                return res.json(results).send()
+            }
+
+        
+        } catch (error) {
+            console.log(error)
+            next(error)
         }
-
- 
          
      },
     async create(req, res, next) {

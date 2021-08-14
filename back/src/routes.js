@@ -18,7 +18,7 @@ routes.delete('/appointment', AppointmentController.delete)
 routes.get('/login', AuthenticatorController.login)
 
 routes.get('/me', AuthenticatorController.userConfirm)
-routes.post('/people/medic', PeopleController.medicUser)
+routes.get('/people/medic', PeopleController.medicUser)
 
 
 

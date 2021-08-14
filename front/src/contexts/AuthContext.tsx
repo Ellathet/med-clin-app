@@ -21,10 +21,10 @@ interface User {
 interface AuthContextData {
     isAuthenticated: boolean;
     user:User | null;
-    signIn: (data : SignInData) => Promise<void>
+    /* signIn: (data : SignInData) => Promise<void> */
     signUp: (data : SignUpData) => Promise<void>
     error: number;
-    recoverUserInfos: any;
+    /* recoverUserInfos: any; */
 }
 interface SignUpData {
 
@@ -38,20 +38,21 @@ export const AuthContext = createContext({} as AuthContextData)
 
 export function AuthProvider({children}) {
 
-    const [user, setUser ] = useState<User | null>(null)
-    const [error, setError ] = useState(200)
+//JTW Login
 
-    const isAuthenticated = !!user;
+/*     const [user, setUser ] = useState<User | null>(null) */
 
-    async function recoverUserInfos(token : string) {
+/* const isAuthenticated = !!user; */
+
+/*     async function recoverUserInfos(token : string) {
         return api.get(`/me`,{
             headers: {
                 Authorization: `Bearer ${token}`
             }
         })
-    }
+    } */
 
-    useEffect(() => {
+/*     useEffect(() => {
         
         const { 'medClin-token': token } = parseCookies()
 
@@ -59,9 +60,9 @@ export function AuthProvider({children}) {
             recoverUserInfos(token).then(response =>{setUser(response.data)})
         }
 
-    })
+    }) */
 
-    async function signIn({email, password} : SignInData ) {
+/*     async function signIn({email, password} : SignInData ) {
 
         api.get(`/login`, {
             auth: {
@@ -80,7 +81,7 @@ export function AuthProvider({children}) {
 
         })
     
-    }
+    } */
 
     async function signUp({name, birthDate, email, rg, cpf, password, medicFunction, type} : any) {
         api.post(`/people`, {
@@ -95,14 +96,15 @@ export function AuthProvider({children}) {
             password: password,
             
         }).then((response) => {
+  
             
-            setCookie(undefined, "medClin-token", response.data.token, {
+/*             setCookie(undefined, "medClin-token", response.data.token, {
                 maxAge: 60 * 60 * 24, //24 horas
             })
+*/
+/*             setUser(response.data) */
 
-            setUser(response.data)
-
-            api.defaults.headers['Authorization'] = `Bearer ${response.data.token}`
+/*             api.defaults.headers['Authorization'] = `Bearer ${response.data.token}` */
  
             Router.push('/appointments')
 
@@ -112,12 +114,12 @@ export function AuthProvider({children}) {
 
     return (
         <AuthContext.Provider value={{
-            isAuthenticated,
-            signIn,
-            user,
-            error,
+            /* isAuthenticated, */
+        /*     signIn, */
+       /*      user,
+            error, */
             signUp,
-            recoverUserInfos
+        /*     recoverUserInfos */
         }}>
             {children}
         </AuthContext.Provider>

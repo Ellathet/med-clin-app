@@ -37,9 +37,7 @@ interface FormData {
 export default function Register() {
 
 
-  const { signUp, user} = useContext(AuthContext);
-
-  console.log(user)
+  const { signUp } = useContext(AuthContext);
 
   const schema = yup.object().shape({
     name: yup.string()
@@ -81,7 +79,6 @@ export default function Register() {
     medicFunction: yup.string(),
   })
 
-
   const { register, handleSubmit,  formState: { errors } } = useForm({
     resolver: yupResolver(schema)
   })
@@ -119,7 +116,9 @@ export default function Register() {
           <select {...register('medicFunction')}>
             {options.map((option, index) => {
               return (
+                <>
                 <option value={option.value}>{option.label}</option>
+                </>
               )
             })}
           </select>
@@ -142,7 +141,7 @@ export default function Register() {
       <div className={styles.header}></div>
       <div className={styles.container}>
         <form className={styles.form} id="register" onSubmit={handleSubmit(handleSignUp)}>
-          <h1>Dados Pessoais</h1>
+          <h1>Registro de Usuário</h1>
           <div className={styles.dualInputContainer}>
             <div className={styles.inputContainer}>
               <label htmlFor="name">Nome Completo</label>
@@ -193,13 +192,13 @@ export default function Register() {
             </div>
           <div>
             <div className={`${styles.inputContainer} ${styles.buttonInputContainer}`}>
-              <label htmlFor="type">O que você procura?</label>
+              <label htmlFor="type"></label>
                 <div className={styles.buttons}>
                   <div className={`${styles.medicButton} ${styles.functionButton}`} onClick={toggle}>
-                    Sou médico
+                    Médico
                   </div>
                   <button className={styles.functionButton} type="submit" form="register" onClick={() => setIsForm(false)}>
-                    Quero me Consultar
+                    Paciente
                   </button>
                 </div>
             </div>
@@ -213,7 +212,8 @@ export default function Register() {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
+//JTW Login
+/* export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   const { ['medClin-token']: token} = parseCookies(ctx)
 
@@ -230,4 +230,4 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     props: {}
   }
 
-}  
+}   */
