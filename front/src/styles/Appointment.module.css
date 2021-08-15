@@ -22,7 +22,217 @@
     flex-direction: column;
     align-items: center;
 
-    width: 60%;
+    width: 35%;
     min-height: 30rem;
     border-radius: 7px;
+}
+
+.container h2 {
+    margin-bottom: 2px;
+}
+
+.inputContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+}
+
+.inputContainer span {
+    margin-top: 0.4rem;
+    margin-left: 0.5rem;
+
+    color: var(--red);
+    font-size: 1rem;
+}
+
+.form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    padding: 1rem;
+
+    gap: 1.5rem;
+}
+
+.form input {
+
+    background-color: var(--blue-holder);
+
+    max-width: 23rem;
+    min-width: 23rem;
+
+    height:3rem;
+    border-radius: 7px;
+
+    border: none;
+
+    padding: 0rem 1rem 0rem 1rem;
+
+    transition: background-color 0.4s;
+
+    font-size: 1rem;
+    color: var(--out-text);
+    font-weight:500;
+
+}
+
+.form input:focus {
+    color: var(--text);
+    outline: none !important;
+    border: 2px solid var(--dark-blue);
+}
+
+.form label {
+
+    font-size: 1.2rem;
+    color: var(--text);
+    font-weight: 500;
+    margin-left: 0.6rem;
+    margin-bottom: 0.3rem;
+
+}
+
+.form h1 {
+    margin-bottom: 1rem;
+    color: var(--dark-gray);
+}
+
+.buttonContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 1rem;
+}
+
+.functionButton {
+    
+    border: none;
+    border-radius: 7px;
+
+    height:4rem;
+    min-height: 4rem;
+
+    max-width: 8rem;
+    min-width: 8rem;
+
+    padding: 0.5rem;
+
+    font-size: 1.3rem;
+    color: var(--white);
+    font-weight: 700;
+
+    background-color: var(--dark-blue);
+
+    transition: background-color 0.4s;
+    transition: color 0.4s;
+    transition: border 0.4s
+}
+
+.cancelButton {
+    background-color: var(--red)
+}
+
+.functionButton:hover {
+
+    cursor: pointer;
+
+    background-color: var(--white);
+    border: 3px solid var(--dark-blue);
+
+    color: var(--dark-blue)
+}
+
+.cancelButton:hover {
+    cursor: pointer;
+
+    background-color: var(--white);
+    border: 3px solid var(--red);
+
+    color: var(--red)
+
+}
+
+.modalBackground {
+    background: rgba(242, 243, 245, 0.8);
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center
+}
+
+.modalContainer {
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    background-color: var(--white);
+    border-radius: 7px;
+    padding: 2rem;
+    height: auto;
+    min-height: 15rem;
+    width: 30%;
+    min-width: 30rem;
+}
+
+.modalContainer button {
+    
+    border: none;
+    border-radius: 7px;
+
+    height:4.5rem;
+    min-height: 4rem;
+
+    max-width: 13rem;
+    min-width: 13rem;
+
+    padding: 0.5rem;
+
+    font-size: 1.3rem;
+    color: var(--white);
+    font-weight: 700;
+
+    background-color: var(--green);
+
+    transition: background-color 0.4s;
+    transition: color 0.4s;
+    transition: border 0.4s;
+
+}
+
+.modalContainer button:hover{ 
+    cursor: pointer;
+
+    background-color: var(--white);
+    border: 3px solid var(--green);
+
+    color: var(--green)
+}
+
+.modalContainer h2 {
+    margin-bottom: 0.5rem;
+}
+
+.modalContainer span {
+    color: var(--dark-gray);
+    font-weight: 600;
+    font-size: 2rem;
+    margin-bottom: 2rem;  
+}
+
+
+.closeButton {
+    font-size: 2rem;
+    position: absolute;
+    top: 1rem;
+    right: 2rem;
 }

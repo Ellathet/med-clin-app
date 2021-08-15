@@ -1,7 +1,6 @@
-
 import { api } from '../services/api';
 import { createContext, useEffect, useState } from "react";
-import { setCookie, parseCookies } from 'nookies'
+import { setCookie, parseCookies, destroyCookie } from 'nookies'
 import Router from "next/router"
 interface User {
     ID: number;
@@ -21,14 +20,14 @@ interface AuthContextData {
     isAuthenticated: boolean;
     user:User | null;
     medic: User | null;
-    signIn: (data : SignInData) => Promise<void> 
-    signUp: (data : SignUpData) => Promise<void>
+    signIn: (data : SignInData) => Promise<void>;
+    signUp: (data : SignUpData) => Promise<void>;
     setUser: any;
     setMedic: any;
     recoverUserInfos: any; 
+    singOut: () => void;
 }
 interface SignUpData {
-
 } 
 interface SignInData {
     email: string;
@@ -39,45 +38,49 @@ export const AuthContext = createContext({} as AuthContextData)
 
 export function AuthProvider({children}) {
 
-//Usuário da pagina de consultas
+//Dados do usuário
+    const [user, setUser ] = useState<User | null>(null) 
 
-const [user, setUser ] = useState<User | null>(null) 
-const [medic, setMedic ] = useState<User | null>(null) 
+//Dados do médico selecionado na pagina de Appointments (Ideal seria criar outro contexto)
+    const [medic, setMedic ] = useState<User | null>(null) 
 
- useEffect(() => {
+//Verifica se o usuário está autenticado
+    const isAuthenticated = !!user; 
 
-    setCookie(undefined, "medClin-medic", medic)
+//Effect que atualiza os dados do médico
+    useEffect(() => {
 
-}, [medic])
+        setCookie(undefined, "medClin-medic", JSON.stringify(medic))
 
-useEffect(() => {
+    }, [medic])
 
-    setCookie(undefined, "medClin-user", JSON.stringify(user) )
-
-    const { 'medClin-user': userCookie } = parseCookies()
-
-}, [user]) 
-
- const isAuthenticated = !!user; 
-
+//Função que puxa os dados do usuário pelo Token
      async function recoverUserInfos(token : string) {
-        return api.get(`/me`,{
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        })
+        return api.get(`/me`)
     } 
 
+    async function setUserData(userData) {
+        setCookie(undefined, "medClin-user", JSON.stringify(userData[0]), {
+            maxAge: 60 * 60 * 24, // 24 hours
+        })
+
+        console.log(userData[0])
+
+        setUser(userData[0])
+    }
+
+//Effect que observa a atualização dos Tokens
     useEffect(() => {
         
         const { 'medClin-token': token } = parseCookies()
 
         if(token) {
-            recoverUserInfos(token).then(response =>{setUser(response.data)})
+            recoverUserInfos(token).then(response =>{setUserData(response.data)})
         }
 
     }, [])  
 
+//Função que faz o login 
     async function signIn({email, password} : SignInData ) {
 
         api.get(`/login`, {
@@ -85,20 +88,28 @@ useEffect(() => {
                 username: email ,
                 password: password
             },
-        }).then((response)=> {
+        }).then(async (response)=> {
 
+            //Seta o cookie do token
             setCookie(undefined, "medClin-token", response.data.token, {
                 maxAge: 60 * 60 * 24, // 24 hours
             })
 
+            //Seta o cookie com os dados do usuário (Medida paliativa)
+            setCookie(undefined, "medClin-user", JSON.stringify(response.data.people[0]), {
+                maxAge: 60 * 60 * 24, // 24 hours
+            } )
+
             setUser(response.data.people[0])
 
+            //Redirecionamento da pagina
             Router.push('/')
 
         })
     
     } 
-
+    
+//Função que faz o registro
     async function signUp({name, birthDate, email, rg, cpf, password, medicFunction, type} : any) {
         api.post(`/people`, {
             
@@ -117,14 +128,24 @@ useEffect(() => {
                 maxAge: 60 * 60 * 24, //24 horas
             })
 
-            setUser(response.data) 
+            setUser(response.data.people) 
 
-            api.defaults.headers['Authorization'] = `Bearer ${response.data.token}` 
+            setCookie(undefined, "medClin-user", JSON.stringify(response.data.people), {
+                maxAge: 60 * 60 * 24, // 24 hours
+            })
  
             Router.push('/')
 
         })
 
+    }
+//Função de sair
+    async function singOut() {
+        await destroyCookie(null, 'medClin-token')
+        await destroyCookie(null, 'medClin-user')
+        await setUser(null)
+
+        Router.push('/login')
     }
 
     return (
@@ -136,7 +157,8 @@ useEffect(() => {
             setMedic,
             setUser,
             signUp, 
-            recoverUserInfos 
+            recoverUserInfos,
+            singOut
         }}>
             {children}
         </AuthContext.Provider>

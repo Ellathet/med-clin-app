@@ -1,175 +1,55 @@
-.header {
-    z-index: -1;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 50%;
-    background-color: var(--blue);
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 3rem;
+
+    gap: 7rem;
 }
 
-.container {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    -webkit-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
+.main {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-content: center;
+    justify-content: center;
+    gap: 4rem;
+    
+    flex: 1;
+}
 
-    background-color: var(--white);
-    padding: 2rem;
+.menuButton {
+
+    height: 400px;
+    width: 400px;
 
     display: flex;
-    flex-direction: column;
     align-items: center;
+    justify-content: center;
+    flex-direction: column;
 
-    width: 60%;
-    min-height: 30rem;
+    background-color: var(--blue);
+
     border-radius: 7px;
-}
 
-.container h1 {
-    margin-bottom: 1rem;
-    color: var(--dark-gray);
-}
+    transition: background-color 0.4s;
 
-.containerHeader h2 {
-    margin-bottom: 1rem;
-    margin-left: 1rem;
-}
-
-.searchHeader {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
     gap: 1rem;
 }
 
-.searchHeader input {
-    background-color: var(--blue-holder);
-
-    height:3rem;
-    border-radius: 7px;
-
-    border: none;
-
-    padding: 0rem 1rem 0rem 1rem;
-
-    transition: background-color 0.4s;
-
-    font-size: 1rem;
-    color: var(--out-text);
-    font-weight:500;
+.menuButton span {
+    font-size: 1.7rem;
+    font-weight: 800;
+    color: var(--white)
 }
 
-.searchHeader select {
-    background-color: var(--blue-holder);
-
-
-    height:3rem;
-    border-radius: 7px;
-
-    border: none;
-
-    padding: 0rem 1rem 0rem 1rem;
-
-    transition: background-color 0.4s;
-
-    font-size: 1rem;
-    color: var(--out-text);
-    font-weight:500;
-}
-
-.userList {
-
-    min-width: 100%;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    gap: 0.5rem;
-
-    list-style: none;
-
-    transition: background-color 0.4s;
-
-}
-
-.userList li {
-
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-
-    padding: 1rem;
-
-    border-radius: 7px;
-    min-width: 82.5%;
-
-    margin-top: 1rem;
-
-    background: var(--background);
-}
-
-.userList span {
-    margin-left: 0.3rem;
-    font-weight: 500;
-    color: var(--text)
-}
-
-.userList li:hover {
-    background-color: var(--blue-holder);
-}
-
-.userFunctions { 
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-
-    gap: 0.3rem;
-}
-
-.functionButtons {
-    color: var(--dark-blue)
-}
-
-.functionButtons:hover {
+.menuButton:hover {
     cursor: pointer;
-    color: var(--blue)
+
+    background-color: var(--dark-blue);
 }
 
-.modalBackground {
-    background: rgba(242, 243, 245, 0.8);
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 2;
-    display: flex;
-    align-items: center;
-    justify-content: center
-}
-
-.modalContainer {
-    background-color: var(--white);
-    border-radius: 7px;
-    padding: 2rem;
-    height: auto;
-    min-height: 20rem;
-    width: 30%;
-    min-width: 30rem;
-}
-
-.modalContainer h2 {
-    margin-bottom: 0.5rem;
-}
-
-.modalContainer span {
-    margin-bottom: 0.5rem;  
-}
-
-.closeButton {
-    font-size: 2rem;
-    position: absolute;
-    top: 1rem;
-    right: 2rem;
+.icons {
+    color: var(--white);
+    font-size: 7rem;
 }

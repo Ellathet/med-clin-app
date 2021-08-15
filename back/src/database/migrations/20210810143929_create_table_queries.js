@@ -4,16 +4,14 @@ exports.up = function(knex) {
         table.increments('ID')
 
         table.integer('MEDIC_ID')
-            .references('people.ID')
             .notNullable()
-            .onDelete('CASCADE')
+        table.string('MEDIC_NAME')
         table.integer('PATIENT_ID')
-            .references('people.ID')
             .notNullable()
-            .onDelete('CASCADE')
+        table.string('PATIENT_NAME')
         table.string('DESCRIPTION')
 
-        table.date('APPOINTMENT')
+        table.date('SCHEDULING')
 
         table.timestamp('created_at').defaultTo(knex.fn.now())
         table.timestamp('updated_at').defaultTo(knex.fn.now())

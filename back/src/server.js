@@ -1,3 +1,5 @@
+const { Cryptography } = require('./argon2')
+
 const express = require('express');
 const cors = require('cors')
 const routes = require('./routes')
@@ -13,5 +15,6 @@ app.use((error, req, res, next) => {
     res.json({error: error.message})
     
 })
+
 
 app.listen(3333, () => console.log("Server is Running"));

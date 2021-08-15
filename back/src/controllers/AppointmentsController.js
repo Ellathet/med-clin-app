@@ -1,3 +1,4 @@
+const { parseISO } = require("date-fns")
 const knex = require("../database")
 
 module.exports = {
@@ -6,25 +7,33 @@ module.exports = {
 
         return res.json(results)
     },
+
     async create(req, res, next) {
 
-        const { medic_id, patient_id, appointment } = req.body
+        const { medic_id, patient_id, scheduling, description, medic_name, patient_name} = req.body
+
+        console.log(req.body.medic_id)
 
         try {
-            await knex('appointment').insert(
+            await knex('appointments').insert(
                 {
                     MEDIC_ID: medic_id,
+                    MEDIC_NAME: medic_name,
                     PATIENT_ID: patient_id,
-                    APPOINTMENT: appointment
+                    PATIENT_NAME: patient_name,
+                    SCHEDULING: parseISO(scheduling),
+                    DESCRIPTION: description,
                 }
             )
 
-            return res.status(201).send()
+            return res.status(200).send()
 
         } catch (error) {
+            console.log(error)
             next(error)
         }           
     },
+
     async update(req, res, next) {
 
         const { medic_id, patient_id, appointment, id } = req.body
@@ -45,6 +54,7 @@ module.exports = {
             next(error)
         }
     },
+
     async delete(req, res, next) {
         try {
 

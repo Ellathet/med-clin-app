@@ -1,4 +1,4 @@
- import { AuthContext } from '../contexts/AuthContext';
+import { AuthContext } from '../contexts/AuthContext';
 import styles from '../styles/Login.module.css'
 
 import { GetServerSideProps } from "next";
@@ -22,6 +22,7 @@ export default function Login() {
   const [email, setEmail] = useState('')
   const { signIn } = useContext(AuthContext);
 
+//Validação de campos com o yup e React-Form
   const schema = yup.object().shape({
     email: yup.string()
               .email('É preciso inserir um E-mail valido')
@@ -69,7 +70,6 @@ export default function Login() {
         await signIn(data)
   }
 
-
   return(
     <div>
       <div className={styles.header}></div>
@@ -98,10 +98,9 @@ export default function Login() {
       </div>
     </div>
     )
-  
 }
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
+ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   //Não é possível importar o user, porque o usuário não foi logado, é possível fazer um &&, porém não é necessário
 
@@ -121,4 +120,4 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     }
   }
 
-} 
+}  

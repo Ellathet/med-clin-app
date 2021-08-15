@@ -25,14 +25,14 @@ module.exports = {
                 .limit(10)
                 .orderBy('NAME', 'FUNCTION')
 
-                return res.json(results).send()
+                return res.json(results)
             } else if (req.query.search_name === undefined) {
                 const results =  await knex('people')
                 .where('TYPE', 'M' )
                 .limit(10)
                 .orderBy('NAME', 'FUNCTION')
 
-                return res.json(results).send()
+                return res.json(results)
             } else {
                 const results =  await knex('people')
                 .where('TYPE', 'M' )
@@ -49,7 +49,7 @@ module.exports = {
                 .limit(10)
                 .orderBy('NAME', 'FUNCTION')
 
-                return res.json(results).send()
+                return res.json(results)
             }
 
         
