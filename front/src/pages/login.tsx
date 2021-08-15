@@ -1,4 +1,4 @@
-/* import { AuthContext } from '../contexts/AuthContext';
+ import { AuthContext } from '../contexts/AuthContext';
 import styles from '../styles/Login.module.css'
 
 import { GetServerSideProps } from "next";
@@ -17,7 +17,7 @@ interface FormData {
   password: string,
 }
 
-export default function Home() {
+export default function Login() {
 
   const [email, setEmail] = useState('')
   const { signIn } = useContext(AuthContext);
@@ -69,7 +69,8 @@ export default function Home() {
         await signIn(data)
   }
 
-  return (
+
+  return(
     <div>
       <div className={styles.header}></div>
       <div className={styles.container}>
@@ -96,24 +97,28 @@ export default function Home() {
         </form>
       </div>
     </div>
-  )
+    )
+  
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
+
+  //Não é possível importar o user, porque o usuário não foi logado, é possível fazer um &&, porém não é necessário
 
   const { ['medClin-token']: token} = parseCookies(ctx)
 
   if(token) {
     return {
       redirect: {
-        destination: '/appointments',
+        destination: '/',
         permanent: false,
       }
     }
   }
 
   return {
-    props: {}
+    props: {
+    }
   }
 
-} */
+} 

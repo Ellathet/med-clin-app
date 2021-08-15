@@ -22,6 +22,15 @@ module.exports = {
                         qb.where('people.NAME', 'like', `%${req.query.search}%`)
                     }
                 })
+                .limit(10)
+                .orderBy('NAME', 'FUNCTION')
+
+                return res.json(results).send()
+            } else if (req.query.search_name === undefined) {
+                const results =  await knex('people')
+                .where('TYPE', 'M' )
+                .limit(10)
+                .orderBy('NAME', 'FUNCTION')
 
                 return res.json(results).send()
             } else {
@@ -37,6 +46,8 @@ module.exports = {
                         qb.where('people.NAME', 'like', `%${req.query.search_function}%`)
                     }
                 })
+                .limit(10)
+                .orderBy('NAME', 'FUNCTION')
 
                 return res.json(results).send()
             }
@@ -81,7 +92,7 @@ module.exports = {
             const user = await knex('people')
             .where('EMAIL', email)
 
-            return res.status(201).send({user, token: await CreateToken(user[0])})
+            return res.status(201)/* .send({user, token: await CreateToken(user[0])}) */
 
         } catch (error) {
 

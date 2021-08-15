@@ -3,7 +3,7 @@ const routes = express.Router()
 
 const PeopleController = require('./controllers/PeopleController') 
 const AppointmentController = require('./controllers/AppointmentsController') 
-const AuthenticatorController = require('./controllers/AuthenticatorController')
+ const AuthenticatorController = require('./controllers/AuthenticatorController') 
 
 routes.get('/people', PeopleController.index)
 routes.post('/people', PeopleController.create)
@@ -17,7 +17,7 @@ routes.delete('/appointment', AppointmentController.delete)
 
 routes.get('/login', AuthenticatorController.login)
 
-routes.get('/me', AuthenticatorController.userConfirm)
+routes.get('/me', AuthenticatorController.userConfirm) 
 routes.get('/people/medic', PeopleController.medicUser)
 
 

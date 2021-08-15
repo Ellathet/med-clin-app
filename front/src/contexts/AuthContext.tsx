@@ -3,7 +3,6 @@ import { api } from '../services/api';
 import { createContext, useEffect, useState } from "react";
 import { setCookie, parseCookies } from 'nookies'
 import Router from "next/router"
-import { AnyObject } from 'yup/lib/types';
 interface User {
     ID: number;
     NAME: string;
@@ -21,10 +20,12 @@ interface User {
 interface AuthContextData {
     isAuthenticated: boolean;
     user:User | null;
-    /* signIn: (data : SignInData) => Promise<void> */
+    medic: User | null;
+    signIn: (data : SignInData) => Promise<void> 
     signUp: (data : SignUpData) => Promise<void>
-    error: number;
-    /* recoverUserInfos: any; */
+    setUser: any;
+    setMedic: any;
+    recoverUserInfos: any; 
 }
 interface SignUpData {
 
@@ -38,21 +39,36 @@ export const AuthContext = createContext({} as AuthContextData)
 
 export function AuthProvider({children}) {
 
-//JTW Login
+//Usuário da pagina de consultas
 
-/*     const [user, setUser ] = useState<User | null>(null) */
+const [user, setUser ] = useState<User | null>(null) 
+const [medic, setMedic ] = useState<User | null>(null) 
 
-/* const isAuthenticated = !!user; */
+ useEffect(() => {
 
-/*     async function recoverUserInfos(token : string) {
+    setCookie(undefined, "medClin-medic", medic)
+
+}, [medic])
+
+useEffect(() => {
+
+    setCookie(undefined, "medClin-user", JSON.stringify(user) )
+
+    const { 'medClin-user': userCookie } = parseCookies()
+
+}, [user]) 
+
+ const isAuthenticated = !!user; 
+
+     async function recoverUserInfos(token : string) {
         return api.get(`/me`,{
             headers: {
                 Authorization: `Bearer ${token}`
             }
         })
-    } */
+    } 
 
-/*     useEffect(() => {
+    useEffect(() => {
         
         const { 'medClin-token': token } = parseCookies()
 
@@ -60,9 +76,9 @@ export function AuthProvider({children}) {
             recoverUserInfos(token).then(response =>{setUser(response.data)})
         }
 
-    }) */
+    }, [])  
 
-/*     async function signIn({email, password} : SignInData ) {
+    async function signIn({email, password} : SignInData ) {
 
         api.get(`/login`, {
             auth: {
@@ -77,11 +93,11 @@ export function AuthProvider({children}) {
 
             setUser(response.data.people[0])
 
-            Router.push('/appointments')
+            Router.push('/')
 
         })
     
-    } */
+    } 
 
     async function signUp({name, birthDate, email, rg, cpf, password, medicFunction, type} : any) {
         api.post(`/people`, {
@@ -97,16 +113,15 @@ export function AuthProvider({children}) {
             
         }).then((response) => {
   
-            
-/*             setCookie(undefined, "medClin-token", response.data.token, {
+            setCookie(undefined, "medClin-token", response.data.token, {
                 maxAge: 60 * 60 * 24, //24 horas
             })
-*/
-/*             setUser(response.data) */
 
-/*             api.defaults.headers['Authorization'] = `Bearer ${response.data.token}` */
+            setUser(response.data) 
+
+            api.defaults.headers['Authorization'] = `Bearer ${response.data.token}` 
  
-            Router.push('/appointments')
+            Router.push('/')
 
         })
 
@@ -114,12 +129,14 @@ export function AuthProvider({children}) {
 
     return (
         <AuthContext.Provider value={{
-            /* isAuthenticated, */
-        /*     signIn, */
-       /*      user,
-            error, */
-            signUp,
-        /*     recoverUserInfos */
+        isAuthenticated,
+            signIn,
+            medic,
+            user,
+            setMedic,
+            setUser,
+            signUp, 
+            recoverUserInfos 
         }}>
             {children}
         </AuthContext.Provider>

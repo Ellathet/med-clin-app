@@ -213,14 +213,14 @@ export default function Register() {
 }
 
 //JTW Login
-/* export const getServerSideProps: GetServerSideProps = async (ctx) => {
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   const { ['medClin-token']: token} = parseCookies(ctx)
 
   if(token) {
     return {
       redirect: {
-        destination: '/appointments',
+        destination: '/',
         permanent: false,
       }
     }
@@ -230,4 +230,4 @@ export default function Register() {
     props: {}
   }
 
-}   */
+}  

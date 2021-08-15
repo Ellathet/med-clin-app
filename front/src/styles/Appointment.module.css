@@ -23,11 +23,6 @@
     align-items: center;
 
     width: 60%;
-    max-height: 55rem;
+    min-height: 30rem;
     border-radius: 7px;
-}
-
-.container h1 {
-    margin-bottom: 1rem;
-    color: var(--dark-gray);
 }

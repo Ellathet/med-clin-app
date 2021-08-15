@@ -11,7 +11,7 @@ export default function SearchInput({value, onChange} : InputData) {
     }
 
     return (
-        <input type='search' value={value} onChange={handleChange}/>
+        <input type='search' value={value} onChange={handleChange} placeholder="Digite o nome de busca..."/>
     )
 
 }
