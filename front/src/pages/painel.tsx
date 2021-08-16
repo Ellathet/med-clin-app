@@ -3,7 +3,7 @@ import { parseCookies } from 'nookies';
 
 import { api } from "../services/api";
 
-import PatientIndex from "../components/PatientIndex";
+import SchedulerIndex from "../components/SchedulerIndex";
 interface User {
   ID: number;
   NAME: string;
@@ -24,7 +24,7 @@ export default function painel(props) {
 
 //Pagina que o paciente tem acesso
     if (user.TYPE === 'P') return (
-      <PatientIndex user={user}/>
+      <SchedulerIndex user={user}/>
     ); 
 
   }
@@ -35,6 +35,10 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { ['medClin-token']: token} = parseCookies(ctx)
   //Busca os dados do user no Cookies
   const { ['medClin-user']: user} = parseCookies(ctx)
+
+  await new Promise((resolve, reject) => {
+    setTimeout(resolve, 500)
+  }) 
 
   if(!token) {
     return {

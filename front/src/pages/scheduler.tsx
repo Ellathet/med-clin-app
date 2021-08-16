@@ -13,7 +13,7 @@ import { api } from "../services/api"
 import { useState } from "react"
 import { GrFormClose } from "react-icons/gr"
 
-export default function Appointment(props) {
+export default function Scheduler(props) {
 
     const user = props.user;
     const [medic, setMedic] = useState(props.medic);
@@ -46,6 +46,7 @@ export default function Appointment(props) {
     api.post("/appointment", {
         medic_id: medic.ID,
         patient_id: user.ID,
+        specialistic: medic.FUNCTION,
         medic_name: data.medic,
         patient_name: data.patient,
         scheduling: data.scheduling,

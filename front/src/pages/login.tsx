@@ -53,8 +53,13 @@ export default function Login() {
                           username: email,
                           password: value
                       },
+                  }).then((response) => {
+
+                      if(response.status === 401 ) res(false)
+                      else res(true)
+
                   }).catch((error)=>{
-          
+        
                       if(error.response.status === 401) res(false)
                       else res(true)
                   })
@@ -103,6 +108,10 @@ export default function Login() {
  export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   //Não é possível importar o user, porque o usuário não foi logado, é possível fazer um &&, porém não é necessário
+
+  await new Promise((resolve, reject) => {
+    setTimeout(resolve, 500)
+  }) 
 
   const { ['medClin-token']: token} = parseCookies(ctx)
 

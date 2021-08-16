@@ -42,7 +42,11 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     const { ['medClin-token']: token} = parseCookies(ctx)
     //Busca os dados do user no Cookies
     const { ['medClin-user']: user} = parseCookies(ctx)
-  
+
+    await new Promise((resolve, reject) => {
+        setTimeout(resolve, 500)
+      }) 
+
     if(!token) {
       return {
         redirect: {

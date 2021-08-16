@@ -10,9 +10,10 @@ exports.up = function(knex) {
             .notNullable()
         table.string('PATIENT_NAME')
         table.string('DESCRIPTION')
-
+        table.string('SPECIALIST')
+        table.boolean('STATUS')
+             .defaultTo(true)
         table.date('SCHEDULING')
-
         table.timestamp('created_at').defaultTo(knex.fn.now())
         table.timestamp('updated_at').defaultTo(knex.fn.now())
       })

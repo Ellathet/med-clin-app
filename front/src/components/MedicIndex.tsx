@@ -1,43 +1,53 @@
+import { format, parseISO } from 'date-fns'
 import { useEffect, useState } from 'react'
 import { api } from '../services/api'
-import styles from '../styles/Painel.module.css'
+import { MdCancel } from 'react-icons/md'
+import { AiFillClockCircle } from 'react-icons/ai'
 
-export default function PatientIndex(data) {
+import styles from '../styles/components/Indexes.module.css'
+import cancelAppointment from '../functions/cancelAppointment'
+
+export default function MedicIndex(data) {
 
     const user = data.user
-
-    const [ appointments, setAppointments ] = useState()
-
-    console.log(appointments)
-
-    useEffect(() => {
-        api.get('/appointment/medic', {
-            params: {
-              search_id: user.ID,
-            }
-          }).then((response) => {
-            console.log(response.data)
-            setAppointments(response.data)
-          })
-    }, [])
+    const appointments = data.appointments
 
     return (
         <>
-        <div className={styles.header}/>
-        <div className={styles.container}>
-          <h2>Suas consultas agendadas</h2>
-          <ul>
-          {/* {appointments.map((appointment) => {
-            return (
-              <>
-                <li key={appointment.ID}>
-
-                </li>
-              </>
-            )
-          })} */}
+          <ul className={styles.userList} >
+          { appointments.length <= 0 ? (
+            <>
+              <h2>Você não tem nenhuma consulta agendada</h2>
+            </>
+          ) : (
+            <>
+                { appointments.map((appointment) => {
+                  return (
+                    <>
+                      <li key={appointment.ID}>
+                        <div>
+                          <h2 className={styles.Title}>Consulta de {appointment.SPECIALIST}</h2> 
+                          <div className={styles.InputsContainer}>
+                            <div className={styles.InputContainer}>
+                              <label htmlFor="medicName">Paciente</label>
+                              <input type="text" name="medicName" disabled defaultValue={appointment.PATIENT_NAME}/>
+                            </div>
+                            <div className={styles.InputContainer}>
+                              <label htmlFor="date">Dia Agendado</label>
+                              <input type="text" name="date" disabled defaultValue={format(parseISO(appointment.SCHEDULING),'dd/MM/yyyy')}/>
+                            </div>
+                          </div>    
+                        </div>
+                        <div className={styles.FunctionsMenu}>
+                          <MdCancel className={styles.CancelButton} onClick={()=> cancelAppointment(appointment.ID)}/>
+                        </div>
+                      </li>
+                    </>
+                  )
+                })}
+            </>
+          )}
           </ul>
-        </div>
         </>
     )
 }

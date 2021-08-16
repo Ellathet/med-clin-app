@@ -10,7 +10,7 @@ module.exports = {
 
     async create(req, res, next) {
 
-        const { medic_id, patient_id, scheduling, description, medic_name, patient_name} = req.body
+        const { medic_id, patient_id, scheduling, description, medic_name, patient_name, specialistic } = req.body
 
         console.log(req.body.medic_id)
 
@@ -23,6 +23,7 @@ module.exports = {
                     PATIENT_NAME: patient_name,
                     SCHEDULING: parseISO(scheduling),
                     DESCRIPTION: description,
+                    SPECIALIST: specialistic,
                 }
             )
 
@@ -36,15 +37,13 @@ module.exports = {
 
     async update(req, res, next) {
 
-        const { medic_id, patient_id, appointment, id } = req.body
+        const { id } = req.body
 
         try {
             await knex('appointment')
             .update(
                 {
-                    MEDIC_ID: medic_id,
-                    PATIENT_ID: patient_id,
-                    APPOINTMENT: appointment
+                    STATUS: false
                 }
             )
             .where('ID', id)
