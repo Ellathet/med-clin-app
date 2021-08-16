@@ -1,14 +1,12 @@
-// Update with your config settings.
-
 module.exports = {
 
   development: {
     client: 'mysql',
     connection: {
-      host:     'localhost',
-      database: 'med-clin',
-      user:     'root',
-      password: 'password'
+      host:     'localhost', //Host do banco
+      database: 'med-clin', //Nome do banco
+      user:     'root', //Nome do usuário
+      password: 'password' //Senha do usuário
     },
     migrations: {
       tableName: 'knex_migrations',
