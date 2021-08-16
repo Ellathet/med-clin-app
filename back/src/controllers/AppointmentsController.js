@@ -40,7 +40,7 @@ module.exports = {
         const { id } = req.body
 
         try {
-            await knex('appointment')
+            await knex('appointments')
             .update(
                 {
                     STATUS: false
@@ -50,6 +50,7 @@ module.exports = {
 
             return res.status(200).send()
         } catch (error) {
+            console.log(error)
             next(error)
         }
     },
